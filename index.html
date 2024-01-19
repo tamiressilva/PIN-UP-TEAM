@@ -53,7 +53,7 @@
     cursor: pointer;
     width: 100%; 
     font-size: 16px;
-    font-weight: bolder;
+    font-weight: bolderning;
 }
 
 
@@ -87,62 +87,65 @@
     </style>
 </head>
 <body>
-    
     <img src="logo-short.svg" alt="">
     <form id="calculatorForm">
-       
+    
         <label for="salario_base">Salário Base:</label>
         <input type="number" name="salario_base" id="salario_base" required>
-        
-        <label for="nota">Nota:</label>
+    
+        <label for="nota">Nota da Tarjeta:</label>
         <input type="number" name="nota" id="nota" required>
-        
+    
         <label for="timing">Timing:</label>
         <input type="number" name="timing" id="timing" required step="0.01" max="1.0">
-        
-        <button type="button" onclick="calcularSalario()">Calcular</button>
     
-
-    <div id="resultado"></div>
-    <div id="total"></div>
-    <div id="error"></div>
-
-    <script>
-        function calcularSalario() {
-            var salarioBase = parseFloat(document.getElementById('salario_base').value);
-            var nota = parseFloat(document.getElementById('nota').value);
-            var timing = parseFloat(document.getElementById('timing').value);
-
-            if (timing > 1.0) {
-                document.getElementById('error').innerHTML = 'Erro: O timing não pode ser superior a 1.0';
-                return;
-            }
-
-            var salarioFinal = calcularSalarioPythonStyle(nota, timing, salarioBase);
-            var totalReceber = salarioBase + salarioFinal;
-
-            document.getElementById('resultado').innerHTML = 'Bonificação: R$' + salarioFinal.toFixed(2);
-            document.getElementById('total').innerHTML = 'Total a Receber: R$' + totalReceber.toFixed(2);
-            document.getElementById('error').innerHTML = '';  
-        }
+        <button type="button" onclick="calcularSalario()">Calcular</button>
         
-        function calcularSalarioPythonStyle(nota, timing, salarioBase) {
-            if (nota >= 95) {
-                return salarioBase * 1.0 * timing;
-            } else if (89 <= nota && nota <= 94) {
-                return salarioBase * 0.70 * timing;
-            } else if (81 <= nota && nota <= 88) {
-                return salarioBase * 0.50 * timing;
-            } else if (75 <= nota && nota <= 80) {
-                return salarioBase * 0.20 * timing;
-            } else {
-                return 0;
+        <div id="resultado"></div>
+        <div id="total"></div>
+        <div id="error"></div>
+    
+        <script>
+            function calcularSalario() {
+                var salarioBase = parseFloat(document.getElementById('salario_base').value);
+                var nota = parseFloat(document.getElementById('nota').value);
+                var timing = parseFloat(document.getElementById('timing').value);
+    
+                // Verifica se os campos estão vazios
+                if (isNaN(salarioBase) || isNaN(nota) || isNaN(timing)) {
+                    document.getElementById('error').innerHTML = 'Erro: Preencha todos os campos.';
+                    return;
+                }
+    
+                if (timing > 1.0) {
+                    document.getElementById('error').innerHTML = 'Erro: O timing não pode ser superior a 1.0';
+                    return;
+                }
+    
+                var salarioFinal = calcularSalarioPythonStyle(nota, timing, salarioBase);
+                var totalReceber = salarioBase + salarioFinal;
+    
+                document.getElementById('resultado').innerHTML = 'Bonificação: R$' + salarioFinal.toFixed(2);
+                document.getElementById('total').innerHTML = 'Total a Receber: R$' + totalReceber.toFixed(2);
+                document.getElementById('error').innerHTML = '';  
             }
-        }
-    </script>
-</form>
-        
-    </script>
+    
+            function calcularSalarioPythonStyle(nota, timing, salarioBase) {
+                if (nota >= 95) {
+                    return salarioBase * 1.0 * timing;
+                } else if (89 <= nota && nota <= 94) {
+                    return salarioBase * 0.70 * timing;
+                } else if (81 <= nota && nota <= 88) {
+                    return salarioBase * 0.50 * timing;
+                } else if (75 <= nota && nota <= 80) {
+                    return salarioBase * 0.20 * timing;
+                } else {
+                    return 0;
+                }
+            }
+        </script>
+    </form>
+    
 </body>
 </html>
 
